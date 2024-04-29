@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ffc00963-9f3a-4296-9dc3-0ca2ff280f8c" name="Changes" comment="Test Commit">
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API.py" beforeDir="false" afterPath="$PROJECT_DIR$/API.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Accuracy Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Accuracy_Test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Input.py" beforeDir="false" afterPath="$PROJECT_DIR$/Input.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/KNN.py" afterDir="false" />
-    </list>
+    <list default="true" id="ffc00963-9f3a-4296-9dc3-0ca2ff280f8c" name="Changes" comment="data preprocessing" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -215,11 +208,28 @@
       <option name="project" value="LOCAL" />
       <updated>1714318454933</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Test Commit">
+      <option name="closed" value="true" />
+      <created>1714425438027</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714425438027</updated>
+    </task>
+    <task id="LOCAL-00003" summary="data preprocessing">
+      <option name="closed" value="true" />
+      <created>1714428574171</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714428574171</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Test Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test Commit" />
+    <MESSAGE value="data preprocessing" />
+    <option name="LAST_COMMIT_MESSAGE" value="data preprocessing" />
   </component>
 </project>
