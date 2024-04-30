@@ -1,10 +1,14 @@
+######################################################
+############ACCURACY TESTER###########################
 
-def checker(pred,eve,):
+
+def checker(pred,eve,): #Reason for this ducnton to define the type of answers produced by the models
     if pred >0:
         if eve >0:
             return "HA"
     return "null"
-
+######################################################
+########## TESTING DATA OUPTUT AND THE MODEL ACCURACY###
 def accuracy(i,j):
     #i = num testeted samples forcasted correctly
     #j =  total test samples
@@ -13,7 +17,7 @@ def accuracy(i,j):
     return formatted_num
 
     #Threat score
-    # Hit alarms  = ha
+    #Hit alarms  = ha
     #missing alarms  = ma
     #false alarms = fa
 def TS(ha,ma,fa):

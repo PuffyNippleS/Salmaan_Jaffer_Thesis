@@ -2,7 +2,7 @@ import socket
 server = "200"
 
 def setup():
-    # checking setup code for server
+
     return"Complete"
 
 def server_program():
