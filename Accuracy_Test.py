@@ -1,9 +1,9 @@
 
 def checker(pred,eve,):
     if pred >0:
-        if eve >0
+        if eve >0:
             return "HA"
-    elif
+    return "null"
 
 def accuracy(i,j):
     #i = num testeted samples forcasted correctly
