@@ -4,6 +4,7 @@ import random
 import sqlite3
 import sklearn
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
 
 ################ ###################
 ###### DATA INPUT ##########
@@ -22,10 +23,8 @@ def read_csv():
                 x_data.append(x)
                 y = row[2]
                 y_data.append(y)
-                #print("X values:")
-                #print(x)
-                #print ("ty")
-                #print(y)
+                #print("X values: "+ str(x))
+                #print ("y: "+ str(y))
     return x_data,y_data
 
 
@@ -35,22 +34,31 @@ def dataclenaing(x_data,y_data):
     #take in input should be varaible and the type of data being tested. FOr now its just checking for no values
     #X = dataset.iloc[:, :-1].values Test these versions out see if they work
     #y = dataset.iloc[:, 4].values
+    x_data=x_data[1:]
+    y_data=y_data[1:]
     x_cleand=[]
     y_cleand=[]
-    for i in len(y_data):
-        if y_data[i] ==0: #removing no rain days or hours
-            break
-        else:
+    k=0
+    k = len(y_data)
+    #print(k)
+    i=0
+    while i <k:
+        #print(i)
+        if y_data[i]!= "0": # Cleaning 0 data to prevent scewing/ favoring no rain
             x_cleand.append(x_data[i])
             y_cleand.append(y_data[i])
+            #print(y_data[i])
+        i = i + 1
     X_train, X_test, y_train, y_test = train_test_split(x_cleand, y_cleand, test_size=0.3, random_state=42) #state = seed of 42:  70/30 split
     return X_train,X_test,y_train,y_test
 
 def datanormilizations(x_train,x_test):
     # feature Normilization
+    x_train1=x_train[:, 1] #removing first row
+    x_test1=x_test[:, 1] #removing first row
     scaler = MinMaxScaler()
-    x_train_norm = scaler.fit_transform(x_train)
-    x_test_norm = scaler.transform(x_test)
+    x_train_norm = scaler.fit_transform(x_train1)
+    x_test_norm = scaler.transform(x_test1)
     return x_test_norm,x_train_norm
 
 def datastandardization(x_train,x_test):
@@ -62,7 +70,7 @@ def datastandardization(x_train,x_test):
 
 
 ###################################################################
-#################DATABASE SECTION#############################
+#################DATABASE SECTION#############################sdok;jfdhaklsjdhfklajsdhflkjashdkljafhkl
 
 
 def SavetoDB():
@@ -114,12 +122,16 @@ def readfromDB():
     return "success"
 
 def savemodel():
-    #https://neptune.ai/blog/saving-trained-model-in-python
+
     return "sucess"
 
 def loadmodel():
     return "Sucess"
 
 
+x,y =read_csv()
+X_train,X_test,y_train,y_test =dataclenaing(x,y)
 
+
+X_test,X_train = datanormilizations(X_train,X_test)
 
