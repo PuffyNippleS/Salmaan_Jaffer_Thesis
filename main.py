@@ -2,7 +2,7 @@
 import Accuracy_Test
 import API
 import Input
-import MLR
-import KNN
+import ML
+
 
 

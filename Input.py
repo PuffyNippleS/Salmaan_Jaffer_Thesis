@@ -2,9 +2,13 @@
 import csv
 import random
 import sqlite3
+import mysql.connector
 import sklearn
+import numpy
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
+import os
+import joblib
 
 ################ ###################
 ###### DATA INPUT ##########
@@ -19,7 +23,7 @@ def read_csv():
             #print(row)
             if row[0]!='': #Data Cleaning
                 #print("added")
-                x= row[0],row[1],row[3],row[4],row[5],row[6]
+                x=row[1],row[3],row[4],row[5]
                 x_data.append(x)
                 y = row[2]
                 y_data.append(y)
@@ -34,28 +38,36 @@ def dataclenaing(x_data,y_data):
     #take in input should be varaible and the type of data being tested. FOr now its just checking for no values
     #X = dataset.iloc[:, :-1].values Test these versions out see if they work
     #y = dataset.iloc[:, 4].values
-    x_data=x_data[1:]
-    y_data=y_data[1:]
     x_cleand=[]
     y_cleand=[]
     k=0
     k = len(y_data)
     #print(k)
-    i=0
+    i=1 #Skip first line as we dont need heading.
     while i <k:
         #print(i)
         if y_data[i]!= "0": # Cleaning 0 data to prevent scewing/ favoring no rain
             x_cleand.append(x_data[i])
             y_cleand.append(y_data[i])
-            #print(y_data[i])
         i = i + 1
-    X_train, X_test, y_train, y_test = train_test_split(x_cleand, y_cleand, test_size=0.3, random_state=42) #state = seed of 42:  70/30 split
+    x_cleandflt=[]
+    y_cleandflt=[]
+    for i in y_cleand: #Converting to float
+        y=float(i)
+        y_cleandflt.append(y)
+    for i in x_cleand:
+        x = float(i[0]), float(i[1]), float(i[2]), float(i[3])
+        x_cleandflt.append(x)
+        print(x)
+    X_train, X_test, y_train, y_test = train_test_split(x_cleandflt, y_cleandflt, test_size=0.3, random_state=42) #state = seed of 42:  70/30 split
     return X_train,X_test,y_train,y_test
 
 def datanormilizations(x_train,x_test):
     # feature Normilization
-    x_train1=x_train[:, 1] #removing first row
-    x_test1=x_test[:, 1] #removing first row
+    x_train1 = [row[1:] for row in x_train]
+    #for i in x_train1:
+     #   print(i)
+    x_test1=[row[1:] for row in x_test] #removing first row
     scaler = MinMaxScaler()
     x_train_norm = scaler.fit_transform(x_train1)
     x_test_norm = scaler.transform(x_test1)
@@ -80,20 +92,7 @@ def SavetoDB():
     # Create a cursor object to execute SQL commands
     cursor = conn.cursor()
     # Create a table if it doesn't exist
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            email TEXT
-        )
-    ''')
-
     # Sample data
-    user_data = [
-        ('Alice', 'alice@example.com'),
-        ('Bob', 'bob@example.com'),
-        ('Charlie', 'charlie@example.com')
-    ]
     # Insert data into the table
     cursor.executemany('INSERT INTO users (name, email) VALUES (?, ?)', user_data)
     # Commit changes to the database
@@ -121,17 +120,49 @@ def readfromDB():
 
     return "success"
 
-def savemodel():
 
-    return "sucess"
+####################################################
+##############MODEL SAVING##########################
+def savemodel(model, type):
+    if type ==1:
+        # Assuming 'knn' is your trained KNeighborsClassifier model
+        model_folder_path = '/Model'  # Specify the folder path where you want to save the model
+        os.makedirs(model_folder_path, exist_ok=True)  # Create the folder if it doesn't exist
+        model_file_path = os.path.join(model_folder_path, 'KNN.pkl')  # Specify the file path and name
+        joblib.dump(model, model_file_path)
+        return "Sucess"
+    elif type == 2:
+        # Assuming 'knn' is your trained KNeighborsClassifier model
+        model_folder_path = '/Model'  # Specify the folder path where you want to save the model
+        os.makedirs(model_folder_path, exist_ok=True)  # Create the folder if it doesn't exist
+        model_file_path = os.path.join(model_folder_path, 'MLR.pkl')  # Specify the file path and name
+        joblib.dump(model, model_file_path)
+        return "Sucess"
+    return "False"
+def loadmodel(type):
+    if type ==1:
+        model_folder_path = '/Model'  # Specify the folder path where you want to save the model
+        os.makedirs(model_folder_path, exist_ok=True)  # Create the folder if it doesn't exist
+        model_file_path = os.path.join(model_folder_path, 'KNN.pkl')  # Specify the file path and name
+        KNN = joblib.load(model_file_path)
+        return KNN
+    elif type == 2:
+        # Assuming 'knn' is your trained KNeighborsClassifier model
+        model_folder_path = '/Model'  # Specify the folder path where you want to save the model
+        os.makedirs(model_folder_path, exist_ok=True)  # Create the folder if it doesn't exist
+        model_file_path = os.path.join(model_folder_path, 'MLR.pkl')  # Specify the file path and name
+        MLR = joblib.load(model_file_path)
+        return MLR
+    return "NULL"
 
-def loadmodel():
-    return "Sucess"
 
 
-x,y =read_csv()
-X_train,X_test,y_train,y_test =dataclenaing(x,y)
+###############################################################
+#########RUNNING##############################################
+def main():
+    x,y=read_csv()
+    X_train, X_test, y_train, y_test = dataclenaing(x,y)
+    x_test_norm,x_train_norm=datanormilizations(X_train,X_test)
+    return x_test_norm,x_train_norm,y_train,y_test
 
-
-X_test,X_train = datanormilizations(X_train,X_test)
 
