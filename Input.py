@@ -40,7 +40,6 @@ def dataclenaing(x_data,y_data):
     #y = dataset.iloc[:, 4].values
     x_cleand=[]
     y_cleand=[]
-    k=0
     k = len(y_data)
     #print(k)
     i=1 #Skip first line as we dont need heading.
@@ -59,7 +58,7 @@ def dataclenaing(x_data,y_data):
         x = float(i[0]), float(i[1]), float(i[2]), float(i[3])
         x_cleandflt.append(x)
         print(x)
-    X_train, X_test, y_train, y_test = train_test_split(x_cleandflt, y_cleandflt, test_size=0.3, random_state=42) #state = seed of 42:  70/30 split
+    X_train, X_test, y_train, y_test = train_test_split(x_cleandflt, y_cleandflt, test_size=0.25, random_state=42) #state = seed of 42:  70/30 split
     return X_train,X_test,y_train,y_test
 
 def datanormilizations(x_train,x_test):
